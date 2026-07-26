@@ -79,8 +79,9 @@ propósito: son los que si faltan, después cuestan diez veces más.
 - [ ] **Tokens de diseño** (colores, tipografía, espaciado, modo oscuro) en un solo lugar,
       antes de escribir el segundo componente.
 - [ ] **`README.md`**: qué es, cómo se levanta, cómo se deploya. Tres secciones, nada más.
-- [ ] **`CLAUDE.md`**: apunta al vault y documenta lo propio del repo. Ver la plantilla
-      de la sección final del `CLAUDE.md` del vault.
+- [ ] **`CLAUDE.md`**: apunta al vault y documenta lo propio del repo. El esqueleto
+      está en `templates/CLAUDE.project.md` de la plantilla — sirve igual para un
+      proyecto que no salga de ella.
 - [ ] **Repo remoto creado y pusheado vacío**, antes de tener código.
 - [ ] **Deploy a producción vacío**, antes de tener features.
 - [ ] Si hay base de datos: **backups activados y una restauración probada.**
