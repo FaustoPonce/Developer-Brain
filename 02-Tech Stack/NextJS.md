@@ -1,0 +1,136 @@
+---
+tags: [stack, frontend, framework, nextjs]
+updated: 2026-07-26
+status: active
+---
+
+# Next.js
+
+> Mi default para cualquier cosa con cara de web. App Router.
+
+---
+
+## Por qué
+
+- SSR/SSG de fábrica → **SEO real**, que es de donde viene mi tráfico.
+- Un solo repo: front + API routes. Sin coordinar dos deploys.
+- Deploy trivial en Vercel o Cloudflare Pages.
+- Lo conozco. Ver [[Decision Making]] → criterio #1.
+
+**Cuándo NO:** app 100% interna sin SEO y sin necesidad de SSR → Vite + React alcanza y arranca más rápido.
+
+---
+
+## Decisiones fijas
+
+| Tema | Decisión |
+|---|---|
+| Router | App Router. Pages Router solo en repos legacy. |
+| Componentes | Server Components por default. `"use client"` solo cuando hace falta. |
+| Data fetching | En Server Components, directo. Nada de `useEffect` para carga inicial. |
+| Mutaciones | Server Actions para forms; Route Handlers para APIs públicas. |
+| Estilos | Tailwind. Ver [[React]]. |
+| Imágenes | `next/image` siempre. |
+| Fuentes | `next/font` — evita CLS. |
+
+---
+
+## Versiones: 14 vs 16 conviven
+
+Tengo proyectos en las dos y **hay un cambio que rompe silenciosamente**:
+
+> **Desde Next 15, `params` y `searchParams` son promesas.** Hay que `await`-earlos.
+> En 14 son objetos planos.
+
+```tsx
+// ❌ Next 14. En 16 el tipo miente y el valor es undefined en runtime.
+function Page({ params }: { params: { lang: string } }) { const l = params.lang; }
+
+// ✅ Next 16
+async function Page({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+}
+```
+
+Por qué importa: al copiar una página de un proyecto viejo a uno nuevo, el tipo compila
+si se declara mal y el fallo aparece como valores vacíos, no como error.
+
+**Antes de escribir una página, mirar la versión en `package.json`.**
+Proyectos nuevos: Next 16 (es lo que usa la plantilla).
+
+---
+
+## Reglas de Server vs Client
+
+Marco `"use client"` **solo** si el componente usa: `useState`, `useEffect`, event handlers,
+APIs del browser o context.
+
+Empujar `"use client"` lo más abajo posible en el árbol. Un client component en el layout
+raíz convierte toda la app en cliente.
+
+```tsx
+// ❌ page.tsx entera como cliente por un botón
+"use client";
+
+// ✅ page.tsx server, y el botón aislado
+// components/CopyButton.tsx → "use client"
+```
+
+---
+
+## SEO — no negociable
+
+Cada página pública necesita:
+
+- `generateMetadata` con `title`, `description`, `openGraph`, `alternates.canonical`.
+- Canonical **absoluta** y única. Duplicados = deindexación.
+- `hreflang` correcto si hay i18n (y `x-default`).
+- `sitemap.ts` y `robots.ts` generados, no estáticos a mano.
+- JSON-LD donde aplique (`Article`, `FAQPage`, `SoftwareApplication`).
+- Sin `noindex` accidental en producción.
+
+Ver checklist en `09-Checklists/`.
+
+---
+
+## Performance
+
+- `dynamic()` para cargas pesadas debajo del fold.
+- `revalidate` explícito en cada fetch. Nada de cache por accidente.
+- `loading.tsx` + Suspense en vez de spinners manuales.
+- Objetivo: LCP < 2.5s, CLS < 0.1 en móvil.
+
+---
+
+## Errores que ya cometí
+
+| Error | Consecuencia |
+|---|---|
+| Ruta traducida que hereda el idioma del segmento padre | ~800 URLs duplicadas por producto cartesiano |
+| Canonical construida desde el parámetro de la URL | Duplicados sin versión canónica |
+| `lastmod` con la fecha del build | Google descarta la señal del sitemap |
+| Podar contenido por antigüedad | 404 recurrentes sobre URLs indexadas |
+| `"use client"` en el layout | Todo el bundle al cliente |
+
+Los post-mortems completos están en `07-Lessons Learned/`, y la checklist que los
+previene en [[SEO Launch]].
+
+---
+
+## Generación estática a escala
+
+La mayoría de mis sitios son exportación estática con miles de páginas. Lo que importa ahí:
+
+- **Los parámetros estáticos son el contrato de qué URLs existen.** Lo que se emita de
+  más, existe, devuelve 200 y Google lo encuentra. Ver [[Internationalization]].
+- Sin servidor no hay redirecciones ni middleware en runtime: **todo se resuelve en
+  build o en la capa de hosting**. Decidirlo antes de elegir exportación estática.
+- El contenido vive como datos versionados en el repo, no en una base.
+  Ver [[Content Pipelines]].
+- Ver [[Programmatic SEO]] antes de generar la primera página en masa.
+
+---
+
+## Enlaces
+
+- [[React]] · [[TypeScript]] · [[Deployment]] · [[API Design]]

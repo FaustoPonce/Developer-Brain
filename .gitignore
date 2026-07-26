@@ -1,0 +1,12 @@
+# Obsidian — estado local de la app, específico de esta máquina.
+# La configuración compartible (plugins, snippets, apariencia) sí se versiona;
+# el layout de ventanas y la caché, no.
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# sistema
+.DS_Store
+Thumbs.db
+desktop.ini
