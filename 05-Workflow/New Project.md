@@ -23,12 +23,37 @@ No sigo hasta tener esto. Es la diferencia entre un producto y una carpeta más.
 
 ---
 
-## Dos caminos
+## Elegir el punto de partida
 
-| El proyecto es… | Ir a |
+**El costo en tokens no es el criterio.** Clonar siempre gana: borrar archivos es casi
+gratis, generarlos es lo caro. Lo que decide es si las **suposiciones heredadas** ayudan
+o pelean. Una plantilla mal aplicada no cuesta tokens, cuesta archivos que mienten.
+
+Cuatro preguntas sobre el proyecto:
+
+1. ¿Exportación estática, sin servidor?
+2. ¿Bilingüe con rutas por idioma?
+3. ¿Datos como JSON versionado en el repo?
+4. ¿SEO como fuente de tráfico?
+
+| "Sí" | Punto de partida |
 |---|---|
-| Sitio estático bilingüe con SEO | **Fase 1a** — sale de la plantilla |
-| Cualquier otra cosa | **Fase 1b** — andamiaje a mano |
+| **3–4** | **Fase 1a** — clonar la plantilla tal cual. Es su arquetipo. |
+| **1–2** | **Fase 1a** y borrar lo que no aplica. Más barato y más correcto que empezar de cero. |
+| **0** | **Fase 1b** — scaffolder oficial del stack, y copiar de la plantilla solo lo que es agnóstico. |
+
+El acoplamiento más profundo de la plantilla es la exportación estática: si el proyecto
+necesita servidor (login, base de datos, middleware), arrancar de ahí es empezar peleando.
+
+**Lo que se copia siempre, incluso en el caso "0":** la config estricta de TypeScript y
+del linter, el módulo único de identidad del sitio, los helpers que omiten en vez de
+inventar, el verificador de SEO atado a un solo comando, y el esqueleto de `CLAUDE.md`
+del proyecto. Son ~485 líneas que no dependen del arquetipo y que regenerar cuesta
+más que copiar.
+
+> **"Desde cero" nunca significa escribir el andamiaje a mano.** Significa scaffolder
+> oficial + la lista de la Fase 1b + copiar lo agnóstico. Si un agente empieza a redactar
+> el `package.json` o la config del compilador desde la nada, algo se hizo mal.
 
 ---
 
