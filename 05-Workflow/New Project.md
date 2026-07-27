@@ -34,10 +34,24 @@ No sigo hasta tener esto. Es la diferencia entre un producto y una carpeta más.
 
 ## Fase 1a — Sitio estático bilingüe: lo hace la plantilla
 
-**No se arma el andamiaje a mano.** El repo `Template proyectos/Pages-Template` ya trae
-resuelto todo lo que antes eran tres fases: TypeScript `strict`, estructura de carpetas,
-i18n con rutas traducidas, sitemap, robots, canonicals, 404, redirección de la raíz,
-analytics por variable de entorno y la verificación automática de SEO.
+**No se arma el andamiaje a mano.** El template ya trae resuelto todo lo que antes eran
+tres fases: TypeScript `strict`, estructura de carpetas, i18n con rutas traducidas,
+sitemap, robots, canonicals, 404, redirección de la raíz, analytics por variable de
+entorno y la verificación automática de SEO.
+
+**El arranque es esto:**
+
+```bash
+git clone https://github.com/FaustoPonce/Pages-Template.git mi-proyecto
+cd mi-proyecto && rm -rf .git && git init && npm install
+```
+
+Y después, una sola instrucción al agente: **"seguí SETUP.md"**. Son 7 pasos escritos
+en el propio repo; no hay que explicárselos.
+
+> **Clonar no es estar listo.** Faltan ~15 minutos: reemplazar el `CLAUDE.md` heredado,
+> el dominio, las rutas, el modelo de datos y los textos. El build **falla a propósito**
+> si no está el dominio, para que no se pueda deployar con canonicals rotas.
 
 El procedimiento concreto —qué archivo tocar, en qué orden— vive en el `SETUP.md` de
 ese repo, porque son rutas y comandos de **ese** repo. Acá va el criterio, allá el paso
