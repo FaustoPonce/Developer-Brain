@@ -90,4 +90,5 @@ Ver [[2026-07-26 - Datos fabricados en schema y metadatos]].
 
 ## Enlaces
 
-[[Content Pipelines]] · [[Internationalization]] · [[SEO Launch]] · [[NextJS]]
+[[Content Pipelines]] · [[Internationalization]] · [[SEO Launch]] · [[NextJS]] ·
+[[AI Crawler Discoverability]]

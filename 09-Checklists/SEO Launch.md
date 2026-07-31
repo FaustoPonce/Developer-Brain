@@ -58,6 +58,8 @@ si el `lastmod` parece la fecha del build, o si falta alguna canonical o es rela
 - [ ] Aviso a los buscadores (IndexNow) cuando hay URLs nuevas.
 - [ ] Breadcrumbs con sus datos estructurados.
 - [ ] Prioridades del sitemap coherentes entre sí, no todo en 1.0.
+- [ ] `llms.txt` / `llms-full.txt` para discoverability de asistentes de IA.
+      Ver [[AI Crawler Discoverability]] — no reemplaza el `robots.txt`, es contexto extra.
 
 ---
 
