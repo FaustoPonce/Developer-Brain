@@ -1,6 +1,6 @@
 ---
 tags: [architecture, i18n, seo, routing]
-updated: 2026-07-26
+updated: 2026-08-14
 status: active
 ---
 
@@ -90,14 +90,33 @@ del sitemap.
 ## La raíz del dominio
 
 Una página raíz cuyo único contenido es elegir idioma es la URL más fuerte del dominio
-gastada en cero contenido, y mete un clic entre el usuario y lo que buscaba.
+gastada en cero contenido, y mete un clic entre el usuario y lo que buscaba. Peor aún:
+Google puede no gastar presupuesto en rastrearla, así que la puerta del dominio queda
+sin indexar.
 
 Las opciones sanas son redirigir por idioma del navegador, o servir el idioma por
 defecto directamente en la raíz. Si la raíz **existe** como selector, al menos que no
 compita: no llevarla al tope de prioridad del sitemap.
 
-*(Pendiente de resolver en mis sitios: hoy tengo selectores de idioma en la raíz con
-prioridad 1.0.)*
+### El fix concreto (exportación estática)
+
+Un export estático no puede redirigir en runtime, así que la redirección va como
+**regla en el host** (el archivo de redirects de la plataforma de hosting), no en el
+código de la app:
+
+1. **La raíz redirige al home del idioma por defecto** (302 si es un default de idioma
+   reversible; 301 si el idioma default es definitivo). El conmutador de idioma en el
+   header saca al usuario del otro idioma en un clic, así que nadie queda varado.
+2. **La raíz pelada sale del sitemap** — una URL que redirige no se lista. Los home
+   reales por idioma quedan como las URLs de prioridad 1.0.
+3. **Cada home por idioma lleva su canonical auto-referencial + hreflang recíproco**,
+   con `x-default` apuntando al home del idioma por defecto. Ojo: es fácil que los home
+   por idioma se queden **sin** canonical ni hreflang si la metadata solo vive en el
+   layout global; hay que declararla en la página.
+
+Evidencia: en un sitio de comparación de precios la raíz era un selector de idioma a
+prioridad 1.0 que **nunca se rastreó** (todo N/D en la inspección de URL), y los home
+por idioma no tenían canonical ni hreflang. Se resolvió con los tres puntos de arriba.
 
 ---
 

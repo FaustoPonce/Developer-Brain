@@ -1,6 +1,6 @@
 ---
 tags: [architecture, datos, estatico, seo]
-updated: 2026-07-26
+updated: 2026-08-16
 status: active
 ---
 
@@ -63,6 +63,18 @@ deshace con un comando, no con una restauración de backup.
 5. **El script que actualiza es idempotente** y no borra por antigüedad.
    Ver [[Content Pipelines]].
 6. **JSON, no YAML ni CSV.** Parseo nativo, sin dependencias, y diffs legibles.
+7. **ID incremental siempre calculado en runtime, nunca hardcodeado en el script.**
+   `max(id existente) + 1`, leído del archivo real en el momento de correr — no un
+   número fijo escrito de antemano. Si más de un script de carga puede llegar a correr
+   sin saber en qué orden respecto de otros (ej. varios generados por agentes de IA en
+   paralelo), un ID hardcodeado choca o se pisa en silencio según quién corra primero.
+   Ver [[Content Pipelines]].
+8. **Antes de escribir un script de verificación cruzada contra el JSON, confirmar el
+   tipo real de los campos clave** (`typeof item.id`) — no asumirlo por convención de
+   otro proyecto. Un `id` guardado como string comparado contra un number hace fallar
+   el 100% de las búsquedas de forma silenciosa y pareja, no un subconjunto — la
+   uniformidad del fallo es la pista de que el bug está en el chequeo, no en los
+   datos. Ver [[2026-08-16 - Fallo uniforme en un chequeo automatico es el chequeo, no el dato]].
 
 ---
 

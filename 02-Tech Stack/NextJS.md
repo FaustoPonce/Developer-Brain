@@ -1,6 +1,6 @@
 ---
 tags: [stack, frontend, framework, nextjs]
-updated: 2026-07-26
+updated: 2026-08-10
 status: active
 ---
 
@@ -111,9 +111,44 @@ Ver checklist en `09-Checklists/`.
 | `lastmod` con la fecha del build | Google descarta la señal del sitemap |
 | Podar contenido por antigüedad | 404 recurrentes sobre URLs indexadas |
 | `"use client"` en el layout | Todo el bundle al cliente |
+| `disallow: ['/_next/']` en `robots.ts` | Google no puede renderizar la página con sus JS/CSS/fuentes reales |
+| Atributo puesto a mano en `<html>` (`data-theme`, etc.) con layout raíz `[lang]/layout.tsx` | Se pierde silenciosamente al cambiar de idioma — ver abajo |
+| `trailingSlash: true` asumido como propagado a todo | `<Link>` solo lo normaliza en rutas 100% dinámicas — `sitemap.ts`, `llms.ts`, JSON-LD y `<a>` planas quedan sin `/` final y el hosting las 307-redirige |
 
 Los post-mortems completos están en `07-Lessons Learned/`, y la checklist que los
 previene en [[SEO Launch]].
+
+---
+
+## Layout raíz con segmento dinámico: `<html>` se recrea al navegar
+
+Patrón usado en toda mi plantilla bilingüe: `[lang]/layout.tsx` es el layout
+**raíz** (no hay `app/layout.tsx` arriba) y renderiza `<html lang={locale}>` directo,
+porque es el único que conoce el idioma.
+
+**El problema:** cuando `[lang]` cambia vía `<Link>` (el switch de idioma), Next.js
+recrea el nodo `<html>` en el cliente. No es un reload completo — el `window`,
+`localStorage` y el resto del JS siguen vivos — pero es un remount real del árbol
+del layout raíz, así que **cualquier atributo puesto de forma imperativa sobre
+`<html>`/`<body>` (fuera del render de React) se pierde**, sin warning ni error.
+Un caso real: un switch de tema claro/oscuro manual que guarda la preferencia en
+`data-theme` vía JS — al cambiar de idioma, el atributo desaparecía y la página caía
+al `prefers-color-scheme` del sistema, ignorando lo que el usuario había elegido.
+
+El script `beforeInteractive` de `next/script` (el que evita el flash del tema
+incorrecto en la carga inicial) **no vuelve a correr** en ese remount — solo corre
+una vez, en la carga real de documento.
+
+**Fix:** cualquier estado que viva como atributo imperativo del DOM en `<html>`/`<body>`
+necesita un `useLayoutEffect` **sin array de dependencias** (corre en cada render, no
+solo al montar) en un componente client siempre presente en el layout, que reaplique
+el valor desde la fuente real (`localStorage`, `prefers-color-scheme`, etc.) de forma
+idempotente. Cubre tanto el primer montaje como cualquier remount posterior por cambio
+de idioma — no hace falta detectar el remount explícitamente, alcanza con que el efecto
+sea barato y no-op cuando el valor ya es correcto.
+
+Aplica a cualquier proyecto de la plantilla que guarde preferencia de usuario
+(tema, u otro) fuera del árbol de React sobre el layout raíz.
 
 ---
 

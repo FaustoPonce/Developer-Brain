@@ -1,6 +1,6 @@
 ---
 tags: [workflow, debugging, process]
-updated: 2026-07-26
+updated: 2026-08-11
 status: draft
 ---
 
@@ -44,6 +44,11 @@ Un porcentaje vergonzoso de mis bugs muere acá.
 - **¿Es el dato o el código?** Probar con input mínimo hardcodeado.
 - **¿Pasa en producción también?** Si solo en prod: env, build o datos.
 - **¿Qué asumí sin verificar?** Ahí está el bug, casi siempre.
+- **¿El fallo es uniforme al 100% en todos los casos, o irregular?** Un chequeo
+  automático que falla igual en absolutamente todos los casos (sin ninguna
+  excepción) casi nunca es una propiedad de datos heterogéneos — es una propiedad
+  del chequeo (tipo, comparación, parsing). Sospechar del chequeo antes que de los
+  datos. Ver [[2026-08-16 - Fallo uniforme en un chequeo automatico es el chequeo, no el dato]].
 
 ---
 
@@ -57,9 +62,48 @@ Un porcentaje vergonzoso de mis bugs muere acá.
 | DB | Loguear el SQL generado, `EXPLAIN ANALYZE`. Ver [[PostgreSQL]] |
 | Build | Correr el build de producción en local |
 | Estado | Loguear la transición, no el valor final |
+| Navegador (hidratación, navegación, DOM en runtime) | Ver "Reproducir bugs de navegador" abajo — no adivinar leyendo código |
 
 `console.log` está bien. El debugger es mejor cuando hay que inspeccionar scope.
 Loguear objetos completos, no campos sueltos: `console.log({ user, input, result })`.
+
+---
+
+## Reproducir bugs de navegador sin herramienta dedicada
+
+Bugs de hidratación, navegación client-side o estado del DOM en runtime (ver ejemplo
+real en [[NextJS]] — `<html>` que pierde atributos al navegar) **no se resuelven leyendo
+código**: hace falta un navegador real ejecutando el JS. Si no hay `chromium-cli` u
+otra herramienta de browser automation disponible en el entorno:
+
+1. **`npm install playwright-core`** (no `playwright` completo) — no descarga ningún
+   navegador, solo el driver.
+2. **Apuntar `executablePath` a un browser ya instalado del sistema** (Chrome/Edge en
+   `Program Files`) en vez de dejar que Playwright baje su propio Chromium — mucho más
+   rápido cuando solo se necesita reproducir un bug puntual, no correr una suite.
+3. **Variable marcadora en `window`** puesta antes de la acción sospechosa
+   (`window.__marker = 'x'`) para distinguir con certeza un hard reload (la variable
+   desaparece, el `window` es uno nuevo) de una soft navigation client-side (sobrevive).
+   Evita adivinar por timing o por el Network tab.
+4. **Forzar condiciones que en el entorno de desarrollo no se dan por default**
+   (`browser.newPage({ colorScheme: 'dark' })`, viewport, etc.) para reproducir el
+   síntoma exacto que reportó el usuario, no una aproximación.
+5. **Si el bug involucra una API de terceros detrás de Cloudflare (o cualquier
+   protección anti-bot), pasar un `userAgent` de browser real al crear la página.**
+   El Chrome headless de Playwright manda por default un User-Agent que dice
+   literalmente `HeadlessChrome` — suficiente para que Cloudflare bloquee el request
+   entero (`net::ERR_FAILED`, sin respuesta, indistinguible a simple vista de un bug
+   real de CORS o de la API). Caso real: probar un formulario que postea a
+   `api.web3forms.com` (CompatCheck, 2026-08-11) daba error 100% de las veces desde
+   Playwright pero funcionaba con cualquier usuario real — confirmado inyectando
+   `userAgent: '...Chrome/151.0.0.0...'` (sin "Headless") en `newPage()`, que
+   resolvió el falso negativo al toque. **Antes de asumir que una integración con un
+   servicio externo está rota, descartar esto primero** si el entorno de prueba es
+   headless.
+
+Con eso alcanza para confirmar la causa raíz con evidencia real antes de tocar código
+— evita el ciclo de "arreglo lo que creo que es, el usuario me dice que sigue" cuando
+el bug depende de mecánica de runtime del framework que no es obvia leyendo el código.
 
 ---
 
@@ -88,4 +132,4 @@ el bug aparece mientras escribo la explicación.
 
 ## Enlaces
 
-- [[Error Handling]] · [[Git]] · [[Code Review]]
+- [[Error Handling]] · [[Git]] · [[Code Review]] · [[NextJS]]

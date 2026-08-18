@@ -1,6 +1,6 @@
 ---
 tags: [stack, language, typescript]
-updated: 2026-07-26
+updated: 2026-08-01
 status: draft
 ---
 
@@ -67,6 +67,14 @@ type RequestState<T> =
   | { status: "success"; data: T }
   | { status: "error"; message: string };
 ```
+
+**Cuándo NO uso una discriminated union por variante:** si la única diferencia entre
+variantes es qué campos son opcionales, y el sistema ya trata "campo ausente" como
+"se omite en el render" (ver [[Static Data as Database]]), un tipo plano con esos
+campos opcionales alcanza. Forzar N subtipos para que TypeScript prohíba un campo en
+una variante puntual no cambia nada en runtime: el dato ausente ya se omite igual, y
+el costo es mantener N shapes en vez de uno. Reservo la unión discriminada para
+cuando las variantes tienen **comportamiento** distinto, no solo campos distintos.
 
 **Branded types** para IDs que no se deben mezclar:
 

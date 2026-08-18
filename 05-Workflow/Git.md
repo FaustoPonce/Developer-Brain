@@ -64,6 +64,21 @@ chore(deps): actualizar next a 15.2
 
 ---
 
+## Antes de cargar datos: chequear que el working tree esté limpio de verdad
+
+No asumir que el repo está limpio solo porque la memoria/sesión anterior dijo "todo commiteado" — puede haber cambiado desde entonces, y puede haber **otra sesión de un agente de IA corriendo en paralelo sobre el mismo repo** sin que yo lo sepa (otro chat de Claude Code abierto al mismo tiempo, por ejemplo).
+
+Antes de empezar a escribir/cargar datos en cualquier tarea (no solo research masivo): `git status` + `git diff --stat` + `git fetch origin`.
+
+Si aparece trabajo sin commitear que no reconozco:
+1. No descartarlo ni pisarlo a ciegas — puede ser real.
+2. Verificarlo con spot-checks contra el estado actual (¿los datos citan fuentes reales? ¿coinciden con lo que dice contener?).
+3. Si es real, fusionar el propio trabajo encima (ej. un loader que salta silenciosamente lo que ya existe) en vez de sobreescribir.
+
+**Por qué:** pasó de verdad en CompatCheck (2026-08-11) — una sesión arrancó a cargar datos asumiendo working tree limpio y recién al escribir descubrió ~400 líneas sin commitear de otra sesión paralela, con trabajo real y verificable. Se fusionó sin perder nada, pero podría haberse pisado si no se hubiera chequeado antes de escribir.
+
+---
+
 ## Comandos que uso seguido
 
 ```bash

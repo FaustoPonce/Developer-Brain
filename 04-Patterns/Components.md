@@ -1,6 +1,6 @@
 ---
 tags: [patterns, react, components]
-updated: 2026-07-26
+updated: 2026-08-16
 status: draft
 ---
 
@@ -77,6 +77,22 @@ Cuatro, siempre. Olvidar uno es el bug de UI más común:
 4. **Success** — el caso feliz.
 
 ---
+
+## Chrome persistente (header, footer, nav)
+
+Se escribe una vez, al principio del proyecto, y después casi nunca se vuelve a
+tocar visualmente — cada sesión posterior edita contenido o datos, no chrome. Por
+eso es donde más fácil se pudre un patrón responsive que sí se respeta en el resto
+del sitio: nadie lo revisita hasta que algo lo rompe.
+
+- **`flex-wrap` o un breakpoint explícito, siempre.** Una fila `justify-between` sin
+  ninguno de los dos asume que el contenido nunca va a crecer — un string más largo
+  en una traducción, un botón nuevo, y rompe en silencio.
+- Se prueba a los anchos mínimos reales (320px en adelante), no angostando la
+  ventana del navegador a ojo. Ningún chequeo automático (typecheck, lint, build)
+  detecta overflow horizontal — es el único bug de esta lista que solo aparece
+  mirando el layout renderizado.
+  Ver [[2026-08-16 - Header compartido sin breakpoint mobile pasa cualquier chequeo automatico]].
 
 ## Enlaces
 

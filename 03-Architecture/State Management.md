@@ -1,6 +1,6 @@
 ---
 tags: [architecture, state, frontend]
-updated: 2026-07-26
+updated: 2026-08-01
 status: draft
 ---
 
@@ -57,6 +57,31 @@ el server puede leerlo y renderizar directo.
 const params = useSearchParams();
 const platform = params.get("platform") ?? "all";
 ```
+
+**Excepción — exportación estática con SEO programático:** si la página es de las que
+vive en el sitemap con **una** URL canónica (un hub, un directorio, una ficha), el
+filtro/orden client-side **no puede ser server-readable vía `useSearchParams`**. Google
+rastrea e indexa `?marca=anker` como una variante más de la misma página, y eso es la
+misma fragmentación que [[Programmatic SEO]] ya prohíbe, entrando por otra puerta.
+
+En ese caso leo el deep-link con `useEffect` + `window.location` en vez de
+`useSearchParams`, para que el estado de filtro nunca pase por el render del servidor
+ni quede asociado a la canonical:
+
+```tsx
+// ❌ server-readable → Google indexa la variante filtrada
+const params = useSearchParams();
+
+// ✅ solo cliente, la canonical no se entera de que existe
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  setBrand(params.get('marca') ?? 'all');
+}, []);
+```
+
+El filtro client-side es comodidad de navegación, no reemplaza una página estática con
+contenido propio ("docks con 2 HDMI" sigue siendo su propia URL con su propia razón de
+existir) — son dos mecanismos distintos y no se pisan.
 
 ---
 
