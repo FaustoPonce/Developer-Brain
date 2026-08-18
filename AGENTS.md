@@ -4,8 +4,7 @@ Este repo es el cerebro de desarrollo de Fausto. Contiene cómo trabaja, qué de
 qué errores ya pagó, para no re-explicarlo en cada sesión.
 
 **Leé este archivo completo. Después leé SOLO las notas que la tabla de ruteo indique
-para la tarea que tenés entre manos.** No leas el vault entero: son 42 notas y ~30k
-tokens. El objetivo de este archivo es que no tengas que hacerlo.
+para la tarea que tenés entre manos.** No leas el vault entero: son 54 notas. El objetivo de este archivo es que no tengas que hacerlo.
 
 ---
 
