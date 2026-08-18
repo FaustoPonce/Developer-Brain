@@ -40,6 +40,17 @@ bilingüe EN/ES. Tráfico = SEO orgánico. Monetización = AdSense + afiliados.
 - `lastmod` refleja cambios de contenido reales. **Nunca la fecha del build.**
 - Al sitemap entra solo lo que tiene contenido propio, no todo lo que existe.
 - Nunca borrar contenido por antigüedad: una URL indexada es un compromiso permanente.
+- El defecto técnico que **bloquea la indexación va primero**, siempre. Sin índice no
+  hay ranking, sin ranking no hay cita de IA, y ninguna mejora de contenido se mide.
+- **Google ignora `llms.txt`** (posición explícita). No es palanca de ranking ni de
+  citación; mantenerlo es opcional y de bajo retorno. Lo que sí mueve citas de IA:
+  frescura, respuesta autocontenida arriba de la página, menciones de marca.
+- Traducir un catálogo **no lo convierte en contenido nuevo**: Google nombra las
+  transformaciones automáticas dentro de *scaled content abuse*.
+- **Al auditar Search Console:** impresiones, CTR y posición no son confiables entre
+  2025-05-13 y 2026-04-27 (bug de logging de GSC, sin backfill; clics no afectados).
+  Cualquier tendencia que cruce ese rango se lee con cautela. Detalle en
+  `06-Skills/imported/seo-google`.
 
 **Monetización:**
 - No reaplicar a AdSense hasta que Search Console muestre las páginas corregidas ya
@@ -68,10 +79,12 @@ bilingüe EN/ES. Tráfico = SEO orgánico. Monetización = AdSense + afiliados.
 | **Proyecto nuevo: cualquier otro tipo** | `05-Workflow/New Project.md` → Fase 1b tiene la lista de setup independiente del stack. |
 | Sitio bilingüe / rutas por idioma / hreflang | `03-Architecture/Internationalization.md` |
 | Generar muchas páginas desde datos | `04-Patterns/Programmatic SEO.md` |
+| Aparecer citado en AI Overviews / ChatGPT / Perplexity | `04-Patterns/Generative Engine Optimization.md` |
+| Calidad de contenido, autoría, YMYL, "¿este nicho es para mí?" | `04-Patterns/E-E-A-T.md` |
 | Scraping, pipeline de contenido, generar texto con IA | `04-Patterns/Content Pipelines.md` + el prompt probado en `08-Prompts/` |
 | Datos del sitio: JSON, catálogo, sin base de datos | `03-Architecture/Static Data as Database.md` |
 | Antes de publicar o tras cambiar rutas | `09-Checklists/SEO Launch.md` |
-| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (las 5 notas) |
+| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (17 notas) |
 | Cualquier cosa de Next.js | `02-Tech Stack/NextJS.md` |
 | Componentes, UI, React | `04-Patterns/Components.md`, `04-Patterns/Hooks.md` |
 | Estado en el frontend | `03-Architecture/State Management.md` |
@@ -129,11 +142,11 @@ Lecciones: `YYYY-MM-DD - descripción corta.md`. Toda lección tiene que **cambi
 
 ## Cómo usar esto desde otro repo
 
-Este archivo solo ahorra cuota si los proyectos apuntan acá. En el `CLAUDE.md` de cada
+Este archivo solo ahorra cuota si los proyectos apuntan acá. En el `AGENTS.md` de cada
 proyecto va una línea:
 
-> Convenciones y decisiones: leer `CLAUDE.md` de `OBJETIVOS/Developer-Brain/Developer-Brain/`
+> Convenciones y decisiones: leer `AGENTS.md` de `OBJETIVOS/Developer-Brain/Developer-Brain/`
 > y seguir su tabla de ruteo. Lo de acá abajo son solo los datos propios de este repo.
 
-El `CLAUDE.md` del proyecto se queda con lo que **no** puede vivir en el vault: dominio,
+El `AGENTS.md` del proyecto se queda con lo que **no** puede vivir en el vault: dominio,
 IDs de analytics y AdSense, comandos de build y deploy, estructura de su archivo de datos.

@@ -8,7 +8,7 @@ ni a un agente de IA ni a mí mismo dentro de seis meses.
 
 | Sos… | Leé |
 |---|---|
-| **Un agente de IA** | [`CLAUDE.md`](CLAUDE.md) — reglas que aplican siempre + tabla de ruteo tarea → notas |
+| **Un agente de IA** | [`AGENTS.md`](AGENTS.md) — reglas que aplican siempre + tabla de ruteo tarea → notas |
 | **Un humano** | [`00-README.md`](00-README.md) — qué hay y dónde está |
 
 Leer el vault entero cuesta ~30k tokens y casi nunca hace falta: el router existe para eso.

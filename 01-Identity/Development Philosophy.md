@@ -75,7 +75,7 @@ Esta sección es para los agentes que leen este vault.
 - Resúmenes largos de lo que acaba de hacer.
 
 **Contexto que doy siempre:** stack, si es proyecto nuevo o existente, y qué archivo tocar.
-**Contexto que espera encontrar:** este vault + el `CLAUDE.md` del repo.
+**Contexto que espera encontrar:** este vault + el `AGENTS.md` del repo.
 
 ---
 

@@ -124,7 +124,7 @@ Ver [[Clean Architecture]] para la dirección de las dependencias.
 ├── scripts/
 ├── .env.example
 ├── README.md           # Cómo levantarlo. Sin adornos.
-└── CLAUDE.md           # Contexto para agentes de IA
+└── AGENTS.md           # Contexto para agentes de IA
 ```
 
 ---

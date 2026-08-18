@@ -11,7 +11,7 @@ escrito una sola vez, en un solo lugar.
 **Objetivo:** que cualquier agente de IA (o yo dentro de 6 meses) pueda leer
 este vault y trabajar exactamente como trabajo yo, sin tener que explicarlo de nuevo.
 
-> **¿Sos un agente?** No leas esto: leé `CLAUDE.md`. Tiene las reglas que aplican siempre
+> **¿Sos un agente?** No leas esto: leé `AGENTS.md`. Tiene las reglas que aplican siempre
 > y una tabla que te dice qué notas abrir según la tarea. Este README es el índice para
 > humanos; leer el vault entero cuesta ~30k tokens y casi nunca hace falta.
 
@@ -73,7 +73,7 @@ Es el único filtro que necesito. Si dudo, no entra: el vault se muere por exces
 - Nombres de variables, funciones o archivos concretos
 - Versiones exactas de dependencias
 
-Todo eso envejece rápido y ensucia. Va en el `README.md` o el `CLAUDE.md` **del repo**, no acá.
+Todo eso envejece rápido y ensucia. Va en el `README.md` o el `AGENTS.md` **del repo**, no acá.
 
 **Excepción:** en `07-Lessons Learned/` el caso concreto sí se anota, pero solo como evidencia.
 El valor de la nota es el principio que extraigo, no la crónica del bug.

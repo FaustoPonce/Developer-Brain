@@ -47,7 +47,7 @@ necesita servidor (login, base de datos, middleware), arrancar de ahí es empeza
 
 **Lo que se copia siempre, incluso en el caso "0":** la config estricta de TypeScript y
 del linter, el módulo único de identidad del sitio, los helpers que omiten en vez de
-inventar, el verificador de SEO atado a un solo comando, y el esqueleto de `CLAUDE.md`
+inventar, el verificador de SEO atado a un solo comando, y el esqueleto de `AGENTS.md`
 del proyecto. Son ~485 líneas que no dependen del arquetipo y que regenerar cuesta
 más que copiar.
 
@@ -74,7 +74,7 @@ cd mi-proyecto && rm -rf .git && git init && npm install
 Y después, una sola instrucción al agente: **"seguí SETUP.md"**. Son 7 pasos escritos
 en el propio repo; no hay que explicárselos.
 
-> **Clonar no es estar listo.** Faltan ~15 minutos: reemplazar el `CLAUDE.md` heredado,
+> **Clonar no es estar listo.** Faltan ~15 minutos: reemplazar el `AGENTS.md` heredado,
 > el dominio, las rutas, el modelo de datos y los textos. El build **falla a propósito**
 > si no está el dominio, para que no se pueda deployar con canonicals rotas.
 
@@ -118,8 +118,8 @@ propósito: son los que si faltan, después cuestan diez veces más.
 - [ ] **Tokens de diseño** (colores, tipografía, espaciado, modo oscuro) en un solo lugar,
       antes de escribir el segundo componente.
 - [ ] **`README.md`**: qué es, cómo se levanta, cómo se deploya. Tres secciones, nada más.
-- [ ] **`CLAUDE.md`**: apunta al vault y documenta lo propio del repo. El esqueleto
-      está en `templates/CLAUDE.project.md` de la plantilla — sirve igual para un
+- [ ] **`AGENTS.md`**: apunta al vault y documenta lo propio del repo. El esqueleto
+      está en `templates/AGENTS.project.md` de la plantilla — sirve igual para un
       proyecto que no salga de ella.
 - [ ] **Repo remoto creado y pusheado vacío**, antes de tener código.
 - [ ] **Deploy a producción vacío**, antes de tener features.
