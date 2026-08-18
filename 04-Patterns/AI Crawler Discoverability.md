@@ -1,14 +1,30 @@
 ---
 tags: [patterns, seo, geo, ia, crawlers]
-updated: 2026-07-31
+updated: 2026-08-12
 status: active
 ---
 
 # AI Crawler Discoverability (llms.txt)
 
-> Un archivo de texto plano pensado para que asistentes de IA (ChatGPT, Perplexity,
-> Claude, etc.) entiendan de qué trata el sitio sin tener que rastrear cientos de
-> páginas, y puedan citarlo/recomendarlo con contexto correcto.
+> Un archivo de texto plano pensado para que asistentes de IA entiendan de qué trata el
+> sitio sin rastrear cientos de páginas. **Expectativa realista: no mueve Google.**
+
+---
+
+## Lo primero, porque cambia la prioridad
+
+**Google ignora `llms.txt`.** Es su posición explícita en la guía de optimización para
+IA: no hace falta para Google Search, incluidas sus funciones generativas, y tenerlo
+"no perjudica (ni ayuda) la visibilidad ni el ranking". Mueller llamó al caso de uso de
+descubrimiento "un callejón sin salida", y los estudios de campo sobre logs de servidor
+no encuentran evidencia de que sea una palanca de citación en los sistemas grandes.
+
+**Nunca recomendarlo como palanca de ranking o de citación en Google.** Sigue siendo
+razonable mantenerlo para asistentes que no son de Google, pero es un extra de bajo
+costo y bajo retorno, no una tarea de SEO. Va al final de la lista, no al principio.
+
+Lo que sí mueve las citas de IA está en [[Generative Engine Optimization]]: frescura,
+pasajes autocontenidos, menciones de marca, renderizado en servidor.
 
 ---
 
@@ -19,10 +35,11 @@ sitemap, y no "activa" que las IAs puedan crawlear el sitio — eso ya lo decide
 `robots.txt`. Un `userAgent: '*'` con `allow: '/'` ya permite a todos los bots,
 incluidos `GPTBot`, `ClaudeBot`, `PerplexityBot`, sin configuración extra.
 
-`llms.txt` es puramente un **atajo de contexto**: en vez de que el crawler infiera
-la estructura del sitio leyendo HTML, se la doy servida y resumida.
-
 Ver [[2026-07-31 - robots wildcard ya cubre a los crawlers de IA]].
+
+**Y no es donde se controla la aparición en AI Overviews.** Eso se gobierna con las
+directivas de vista previa de siempre (`nosnippet`, `data-nosnippet`, `max-snippet`,
+`noindex`). No hay archivo de opt-out de IA.
 
 ---
 
@@ -76,4 +93,5 @@ nombre — el error se propaga fuera del sitio, sin que yo lo vea.
 
 ## Enlaces
 
-[[Programmatic SEO]] · [[SEO Launch]] · [[2026-07-31 - robots wildcard ya cubre a los crawlers de IA]]
+[[Generative Engine Optimization]] · [[Programmatic SEO]] · [[SEO Launch]] ·
+[[2026-07-31 - robots wildcard ya cubre a los crawlers de IA]]
