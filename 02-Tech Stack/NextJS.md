@@ -1,6 +1,6 @@
 ---
 tags: [stack, frontend, framework, nextjs]
-updated: 2026-08-10
+updated: 2026-08-18
 status: active
 ---
 
@@ -114,6 +114,7 @@ Ver checklist en `09-Checklists/`.
 | `disallow: ['/_next/']` en `robots.ts` | Google no puede renderizar la página con sus JS/CSS/fuentes reales |
 | Atributo puesto a mano en `<html>` (`data-theme`, etc.) con layout raíz `[lang]/layout.tsx` | Se pierde silenciosamente al cambiar de idioma — ver abajo |
 | `trailingSlash: true` asumido como propagado a todo | `<Link>` solo lo normaliza en rutas 100% dinámicas — `sitemap.ts`, `llms.ts`, JSON-LD y `<a>` planas quedan sin `/` final y el hosting las 307-redirige |
+| `not-found.tsx` puesto dentro de `[lang]/` en vez de la raíz de `app/`, en un proyecto con `output: 'export'` | Nunca se sirve — `out/404.html` sale solo del `not-found.tsx` de la raíz literal. `next dev` no lo detecta (ahí sí lo resuelve). Ver abajo |
 
 Los post-mortems completos están en `07-Lessons Learned/`, y la checklist que los
 previene en [[SEO Launch]].
@@ -149,6 +150,30 @@ sea barato y no-op cuando el valor ya es correcto.
 
 Aplica a cualquier proyecto de la plantilla que guarde preferencia de usuario
 (tema, u otro) fuera del árbol de React sobre el layout raíz.
+
+---
+
+## `output: 'export'` + `[lang]/layout.tsx` como raíz: la 404 propia va en `app/`, no en `[lang]/`
+
+Con `[lang]/layout.tsx` actuando de layout raíz (mismo patrón que la sección
+anterior), es intuitivo poner `not-found.tsx` al lado, dentro de `[lang]/`. Anda en
+`next dev` porque ahí Next resuelve `notFound()` en tiempo de request. En un export
+estático no hay tiempo de request: `out/404.html` (lo que sirve cualquier hosting
+para una URL sin archivo) sale **solo** de `app/not-found.tsx` en la raíz literal —
+un `not-found.tsx` anidado en un segmento dinámico nunca se compila a ese archivo.
+
+**Fix:** `app/not-found.tsx` (raíz) + `app/layout.tsx` (raíz, mínimo). Esto último
+exige la misma pregunta que la sección anterior: ¿duplica el `<html>` de
+`[lang]/layout.tsx`? No — confirmado con un build real. Next resuelve la
+declaración `<html>` más profunda del árbol por ruta; el layout raíz nuevo solo
+termina aplicándose a la página de 404 (la única sin un `[lang]/layout.tsx` encima).
+El `lang` del layout raíz queda fijo (no puede saber el idioma real de una URL que
+no matcheó nada) — aceptable, es la única página del sitio así.
+
+**Se verifica sirviendo la página, no leyendo el código:** `curl` a una URL rota
+real, o levantar el build exportado con un server estático y mirar el HTML. Ningún
+`typecheck`/`lint`/`build` lo detecta. Ver
+[[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]].
 
 ---
 

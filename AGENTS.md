@@ -4,7 +4,7 @@ Este repo es el cerebro de desarrollo de Fausto. Contiene cómo trabaja, qué de
 qué errores ya pagó, para no re-explicarlo en cada sesión.
 
 **Leé este archivo completo. Después leé SOLO las notas que la tabla de ruteo indique
-para la tarea que tenés entre manos.** No leas el vault entero: son 54 notas. El objetivo de este archivo es que no tengas que hacerlo.
+para la tarea que tenés entre manos.** No leas el vault entero: son 55 notas. El objetivo de este archivo es que no tengas que hacerlo.
 
 ---
 
@@ -83,7 +83,7 @@ bilingüe EN/ES. Tráfico = SEO orgánico. Monetización = AdSense + afiliados.
 | Scraping, pipeline de contenido, generar texto con IA | `04-Patterns/Content Pipelines.md` + el prompt probado en `08-Prompts/` |
 | Datos del sitio: JSON, catálogo, sin base de datos | `03-Architecture/Static Data as Database.md` |
 | Antes de publicar o tras cambiar rutas | `09-Checklists/SEO Launch.md` |
-| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (17 notas) |
+| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (18 notas) |
 | Cualquier cosa de Next.js | `02-Tech Stack/NextJS.md` |
 | Componentes, UI, React | `04-Patterns/Components.md`, `04-Patterns/Hooks.md` |
 | Estado en el frontend | `03-Architecture/State Management.md` |

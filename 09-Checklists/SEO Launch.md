@@ -1,6 +1,6 @@
 ---
 tags: [checklist, seo, launch]
-updated: 2026-08-16
+updated: 2026-08-18
 ---
 
 # SEO Launch
@@ -66,7 +66,13 @@ si el `lastmod` parece la fecha del build, o si falta alguna canonical o es rela
 
 - [ ] Título y meta descripción propios por página, dentro de los límites de caracteres.
 - [ ] Un solo dominio canónico. El otro redirige 301.
-- [ ] Página 404 propia, y ninguna URL indexada devolviendo 404.
+- [ ] Página 404 propia **verificada sirviéndola**, no solo el archivo existiendo:
+      `curl` a una URL rota real (o al build exportado) y confirmar que el HTML es
+      el propio. Con `output: 'export'` + `[lang]/layout.tsx` como raíz, un
+      `not-found.tsx` dentro de `[lang]/` nunca se sirve — solo el de la raíz
+      literal de `app/`. `next dev` no lo detecta.
+      Ver [[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]].
+      Y ninguna URL indexada devolviendo 404.
 - [ ] Datos estructurados validados con el test de resultados enriquecidos.
 - [ ] Imagen Open Graph que existe y carga.
 - [ ] `robots.txt` y sitemap accesibles y enviados a Search Console.
@@ -120,6 +126,7 @@ si el `lastmod` parece la fecha del build, o si falta alguna canonical o es rela
 ---
 
 **Origen de los ítems:**
+[[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]] ·
 [[2026-08-16 - Header compartido sin breakpoint mobile pasa cualquier chequeo automatico]] ·
 [[2026-08-16 - trailingSlash no se propaga fuera de Link]] ·
 [[2026-07-26 - Rutas localizadas duplicadas por locale cruzado]] ·
