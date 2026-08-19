@@ -64,15 +64,14 @@ tres fases: TypeScript `strict`, estructura de carpetas, i18n con rutas traducid
 sitemap, robots, canonicals, 404, redirección de la raíz, analytics por variable de
 entorno y la verificación automática de SEO.
 
-**El arranque es esto:**
+**El arranque es una sola instrucción al agente: "seguí SETUP.md".**
 
-```bash
-git clone https://github.com/FaustoPonce/Pages-Template.git mi-proyecto
-cd mi-proyecto && rm -rf .git && git init && npm install
-```
+El paso 1 de ese archivo es el clone, y el agente lo corre solo. Son 7 pasos escritos en
+el propio repo; no hay que explicárselos. Lo único que se agrega es el contexto que el
+`SETUP.md` no puede saber: qué es el proyecto, su modelo de datos y sus reglas propias.
 
-Y después, una sola instrucción al agente: **"seguí SETUP.md"**. Son 7 pasos escritos
-en el propio repo; no hay que explicárselos.
+Conviene pedirle que **frene al terminar el paso 4**: del 1 al 3 es mecánico, pero las
+rutas y el modelo de datos son decisiones, y moverlas después sale caro.
 
 > **Clonar no es estar listo.** Faltan ~15 minutos: reemplazar el `AGENTS.md` heredado,
 > el dominio, las rutas, el modelo de datos y los textos. El build **falla a propósito**
