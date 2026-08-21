@@ -4,7 +4,7 @@ Este repo es el cerebro de desarrollo de Fausto. Contiene cómo trabaja, qué de
 qué errores ya pagó, para no re-explicarlo en cada sesión.
 
 **Leé este archivo completo. Después leé SOLO las notas que la tabla de ruteo indique
-para la tarea que tenés entre manos.** No leas el vault entero: son 55 notas. El objetivo de este archivo es que no tengas que hacerlo.
+para la tarea que tenés entre manos.** No leas el vault entero: son 56 notas. El objetivo de este archivo es que no tengas que hacerlo.
 
 ---
 
@@ -50,6 +50,12 @@ bilingüe EN/ES. Tráfico = SEO orgánico. Monetización = AdSense + afiliados.
   2025-05-13 y 2026-04-27 (bug de logging de GSC, sin backfill; clics no afectados).
   Cualquier tendencia que cruce ese rango se lee con cautela. Detalle en
   `06-Skills/imported/seo-google`.
+- **"Página con redirección" que sube o no valida no es necesariamente un bug.** Si
+  el motivo es un redirect permanente por diseño (protocolo, trailing slash, www,
+  raíz de idioma), el botón "Validar corrección" nunca va a pasar — la condición
+  que chequea es verdadera para siempre. Verificar con `curl -L` sobre los
+  ejemplos reales antes de sospechar una regresión. Ver
+  [[2026-08-21 - Pagina con redireccion en Search Console nunca valida si el redirect es permanente]].
 
 **Monetización:**
 - No reaplicar a AdSense hasta que Search Console muestre las páginas corregidas ya
@@ -83,7 +89,7 @@ bilingüe EN/ES. Tráfico = SEO orgánico. Monetización = AdSense + afiliados.
 | Scraping, pipeline de contenido, generar texto con IA | `04-Patterns/Content Pipelines.md` + el prompt probado en `08-Prompts/` |
 | Datos del sitio: JSON, catálogo, sin base de datos | `03-Architecture/Static Data as Database.md` |
 | Antes de publicar o tras cambiar rutas | `09-Checklists/SEO Launch.md` |
-| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (18 notas) |
+| Caída de tráfico, Search Console, duplicados | `07-Lessons Learned/` (19 notas) |
 | Cualquier cosa de Next.js | `02-Tech Stack/NextJS.md` |
 | Componentes, UI, React | `04-Patterns/Components.md`, `04-Patterns/Hooks.md` |
 | Estado en el frontend | `03-Architecture/State Management.md` |
