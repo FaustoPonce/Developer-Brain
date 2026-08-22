@@ -1,6 +1,6 @@
 ---
 tags: [checklist, seo, launch]
-updated: 2026-08-18
+updated: 2026-08-21
 ---
 
 # SEO Launch
@@ -70,8 +70,13 @@ si el `lastmod` parece la fecha del build, o si falta alguna canonical o es rela
       `curl` a una URL rota real (o al build exportado) y confirmar que el HTML es
       el propio. Con `output: 'export'` + `[lang]/layout.tsx` como raíz, un
       `not-found.tsx` dentro de `[lang]/` nunca se sirve — solo el de la raíz
-      literal de `app/`. `next dev` no lo detecta.
-      Ver [[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]].
+      literal de `app/`. `next dev` no lo detecta. **Si el fix agrega un
+      `app/layout.tsx` (raíz) nuevo por encima de un layout que ya declaraba
+      `<html>`, no alcanza con `grep` sobre el HTML exportado** — puede romper la
+      hidratación en el cliente sin que el HTML estático lo muestre. Probar con
+      Playwright real (consola + interactividad post-hidratación).
+      Ver [[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]]
+      y [[2026-08-21 - Verificar HTML estatico no alcanza para confirmar que un layout raiz es seguro]].
       Y ninguna URL indexada devolviendo 404.
 - [ ] Datos estructurados validados con el test de resultados enriquecidos.
 - [ ] Imagen Open Graph que existe y carga.
@@ -126,6 +131,7 @@ si el `lastmod` parece la fecha del build, o si falta alguna canonical o es rela
 ---
 
 **Origen de los ítems:**
+[[2026-08-21 - Verificar HTML estatico no alcanza para confirmar que un layout raiz es seguro]] ·
 [[2026-08-18 - not-found.tsx fuera de la raiz nunca se sirve en export estatico]] ·
 [[2026-08-16 - Header compartido sin breakpoint mobile pasa cualquier chequeo automatico]] ·
 [[2026-08-16 - trailingSlash no se propaga fuera de Link]] ·
