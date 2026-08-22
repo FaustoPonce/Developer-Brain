@@ -1,6 +1,6 @@
 ---
 tags: [lesson, seo, sitemap]
-updated: 2026-07-26
+updated: 2026-08-22
 severity: medio
 ---
 
@@ -42,7 +42,8 @@ esa URL**. Son dos cosas distintas y solo una le sirve a Google.
 ## Cómo lo prevengo
 
 Ítem en la checklist de SEO: buscar la fecha dinámica en el generador del sitemap.
-Si aparece, está mal.
+Si aparece, está mal. El test automatizado tiene que inspeccionar esa fuente de verdad;
+no debe fallar solo porque una fecha manual válida coincide con el día del deploy.
 
 ## Estado en mis proyectos
 
