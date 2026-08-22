@@ -1,6 +1,6 @@
 ---
 tags: [lesson, seo, nextjs, routing, checklist]
-updated: 2026-08-16
+updated: 2026-08-22
 severity: alto
 ---
 
@@ -58,11 +58,10 @@ tocaron `pathFor`/`dynamicPathFor` en sí — se usan también para extraer par�
 
 ## Cómo lo prevengo
 
-- Con `trailingSlash: true` + un hosting que redirige la versión sin barra
-  (Cloudflare Workers Static Assets con `html_handling: auto-trailing-slash`, el
-  default; Cloudflare Pages no tenía este comportamiento, así que el bug es específico
-  de esta combinación) — **toda URL absoluta armada fuera de `<Link>` necesita el `/`
-  final a mano.** No asumir que la config del framework se propaga sola.
+- Con `trailingSlash: true` + un hosting que redirige la versión sin barra — **toda URL
+  absoluta armada fuera de `<Link>` necesita el `/` final a mano.** No asumir que la
+  config del framework se propaga sola ni que una plataforma concreta sea la excepción:
+  verificar la respuesta HTTP real después de cada migración o cambio de hosting.
 - Nuevo ítem en [[SEO Launch]]: verificar con `curl -sI` que una muestra de URLs del
   sitemap responda 200, no 3xx. `sitemap.ts` y `llms.ts` son los puntos ciegos reales
   porque nunca pasan por `<Link>`.
