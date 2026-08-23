@@ -1,6 +1,6 @@
 ---
 tags: [workflow, deploy, infra]
-updated: 2026-07-26
+updated: 2026-08-23
 status: draft
 ---
 
@@ -43,6 +43,23 @@ status: draft
 - [ ] Migraciones aplicadas y probadas
 - [ ] Sin `console.log` de debug ni código comentado
 - [ ] Sin secrets en código de cliente
+
+## Migración de Pages a Workers con assets estáticos
+
+Workers publica exactamente el directorio final del build; no infiere ni refresca
+configuración de hosting que haya quedado desactualizada dentro de ese artefacto.
+Al migrar, cualquier regla de redirects o fallback tiene que estar presente en el
+directorio que se sube, no solo en su fuente.
+
+**Regla:** si el framework puede reutilizar el output de un build anterior, copiar
+explícitamente los archivos de configuración de hosting al final del build y hacer
+fallar la verificación si fuente y artefacto difieren. Después del deploy, pedir
+cada URL histórica con `curl -I`: un redirect se considera correcto solo si responde
+el código esperado y su destino termina en `200`.
+
+Esto evita el falso positivo más peligroso de una migración: el repositorio contiene
+la regla correcta, pero Workers recibe una copia vieja y los visitantes siguen viendo
+el comportamiento anterior.
 
 ---
 
