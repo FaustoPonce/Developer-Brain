@@ -37,4 +37,3 @@ se cambia código por intuición.
 
 La checklist de [[Deployment]] exige esta prueba de extremo a extremo para cada sitio
 con GA4 y consentimiento.
-
