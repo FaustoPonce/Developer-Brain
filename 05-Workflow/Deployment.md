@@ -67,6 +67,9 @@ el comportamiento anterior.
 
 - [ ] Abrir el sitio en producción. En serio, abrirlo.
 - [ ] Probar el flujo crítico (el que genera plata).
+- [ ] Si hay GA4 con consentimiento: en un navegador sin bloqueadores, aceptar
+      analíticas, navegar una página y confirmar la visita en Realtime. Que el tag
+      aparezca en el HTML no prueba que el evento haya llegado.
 - [ ] Consola del browser sin errores.
 - [ ] Logs del servidor sin picos.
 - [ ] Móvil real.
